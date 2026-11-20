@@ -197,8 +197,12 @@ summary:focus-visible {
 }
 .program-meta p { margin: 4px 0; }
 
+/* Report links at the bottom of each expanded card. */
+.details-body .report { margin: 10px 0 0; color: var(--muted); font-size: 0.85rem; }
+
 /* ---------------------------------------------------------------- footer */
 footer { margin-top: 24px; color: var(--muted); font-size: 0.8rem; }
+footer p { margin: 4px 0; }
 
 /* ---------------------------------------------------------------- phones */
 @media (max-width: 520px) {
