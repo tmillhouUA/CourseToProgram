@@ -1,0 +1,208 @@
+/* ============================================================
+   Course to Program Search: styles
+   Colors are defined once as variables, then redefined for dark mode.
+   ============================================================ */
+
+:root {
+  --bg: #ffffff;
+  --surface: #f6f7f9;       /* expanded card body, hover */
+  --border: #dde1e6;
+  --text: #1c1f23;
+  --muted: #5d6670;
+  --accent: #0c4a8a;        /* links, focus, search button */
+  --accent-text: #ffffff;
+  --highlight: #fff3c4;     /* the searched course inside an expanded card */
+  --error: #a3271f;
+
+  /* Role badges, strongest (required) to weakest (approval). */
+  --badge-strong-bg: #dcebfb;  --badge-strong-fg: #0c4a8a;
+  --badge-mid-bg:    #e3f3e6;  --badge-mid-fg:    #1d6b34;
+  --badge-weak-bg:   #eceef1;  --badge-weak-fg:   #4a525b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15181c;
+    --surface: #1e2227;
+    --border: #343a42;
+    --text: #e6e8eb;
+    --muted: #9aa3ad;
+    --accent: #7db4f0;
+    --accent-text: #0f1215;
+    --highlight: #4a3f12;
+    --error: #f08a80;
+    --badge-strong-bg: #173452;  --badge-strong-fg: #a9cdf5;
+    --badge-mid-bg:    #183a24;  --badge-mid-fg:    #9ad7aa;
+    --badge-weak-bg:   #2b3036;  --badge-weak-fg:   #b8c0c8;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 16px 32px;
+}
+
+h1 { margin: 0 0 4px; font-size: 1.9rem; font-weight: 650; }
+.intro { margin: 0 0 24px; color: var(--muted); }
+
+a { color: var(--accent); }
+
+/* Hidden visually but still read by screen readers. */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- search bar */
+#search-form { display: flex; gap: 8px; }
+
+#course-input {
+  flex: 1;
+  min-width: 0;             /* lets the input shrink on narrow screens */
+  padding: 10px 14px;
+  font-size: 1.1rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+#search-form button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#course-input:focus-visible,
+#search-form button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- status line */
+#status { margin: 24px 0 12px; }
+#status:empty { display: none; }
+#status .course-code { font-size: 1.3rem; font-weight: 650; }
+#status .course-title { font-size: 1.3rem; }
+#status .count { color: var(--muted); margin-top: 2px; }
+#status .message { color: var(--muted); }
+#status .message.error { color: var(--error); }
+
+/* ---------------------------------------------------------------- results list */
+/* The list scrolls on its own so the title and search bar stay in view. */
+#results {
+  max-height: calc(100vh - 260px);
+  min-height: 200px;
+  overflow-y: auto;
+  border-top: 1px solid var(--border);
+}
+#results:empty { display: none; }
+
+/* Each result is a native <details> element: clicking the <summary> toggles it. */
+.result { border-bottom: 1px solid var(--border); }
+
+.result summary {
+  list-style: none;          /* hide the default triangle (Firefox) ... */
+  cursor: pointer;
+  padding: 14px 12px 14px 32px;
+  position: relative;
+}
+.result summary::-webkit-details-marker { display: none; }  /* ... and in Chrome/Safari */
+.result summary:hover { background: var(--surface); }
+
+/* Our own chevron, rotated when open. */
+.result summary::before {
+  content: "›";
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  font-size: 1.3rem;
+  color: var(--muted);
+  transition: transform 0.15s;
+}
+.result[open] summary::before { transform: rotate(90deg); }
+
+.result-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+}
+.program-name { font-weight: 600; }
+.tags { color: var(--muted); font-size: 0.85rem; }
+
+.uses { margin: 6px 0 0; padding: 0; list-style: none; }
+.uses li { margin-top: 4px; font-size: 0.92rem; }
+.uses .group { color: var(--muted); }
+
+/* Role badges */
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  margin-right: 6px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.strong { background: var(--badge-strong-bg); color: var(--badge-strong-fg); }
+.badge.mid    { background: var(--badge-mid-bg);    color: var(--badge-mid-fg); }
+.badge.weak   { background: var(--badge-weak-bg);   color: var(--badge-weak-fg); }
+
+.via { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+
+/* ---------------------------------------------------------------- expanded card */
+.details-body {
+  background: var(--surface);
+  padding: 4px 16px 16px 32px;
+  font-size: 0.92rem;
+}
+
+.req-group { margin-top: 14px; }
+.req-group h3 { margin: 0; font-size: 0.95rem; }
+.req-group .group-rule { color: var(--muted); font-size: 0.85rem; }
+.req-group ul { margin: 6px 0 0; padding-left: 18px; }
+.req-group li { margin: 2px 0; }
+.req-group li.match { background: var(--highlight); border-radius: 4px; padding: 0 4px; margin-left: -4px; }
+.req-group .code { font-weight: 600; }
+.req-group .row-role { color: var(--muted); font-size: 0.82rem; }
+.req-group .row-note { display: block; color: var(--muted); font-size: 0.85rem; }
+.req-group .rule-text { margin: 6px 0 0; }
+.req-group .rule-text.match { background: var(--highlight); border-radius: 4px; padding: 2px 4px; margin-left: -4px; }
+
+.program-meta {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.program-meta p { margin: 4px 0; }
+
+/* ---------------------------------------------------------------- footer */
+footer { margin-top: 24px; color: var(--muted); font-size: 0.8rem; }
+
+/* ---------------------------------------------------------------- phones */
+@media (max-width: 520px) {
+  main { padding-top: 28px; }
+  h1 { font-size: 1.5rem; }
+  #results { max-height: none; }   /* on phones, let the page itself scroll */
+}
