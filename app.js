@@ -231,7 +231,7 @@ function renderFooter(code, result = null) {
     links = reportLinks(title, issueBody(code), { course: code });
   }
   document.getElementById("footer").innerHTML = `
-    <p><strong>Spot an error or a missing program?</strong> Report it: ${links}</p>
+    <p><strong>Spot an error or omission?</strong> Report it: ${links}</p>
     <p>Data gathered ${esc(DATA.gathered)} from College of Information Science program pages and checklists.
        The UA Academic Catalog is authoritative.</p>`;
 }
@@ -261,7 +261,7 @@ function renderCard(result, index, matchCodes) {
       </summary>
       <div class="details-body">
         ${renderRequirements(p, matchCodes, result.uses)}
-        <p class="report">Problem with this listing? Report it:
+        <p class="report"><strong>Problem with this listing?</strong> Report it:
           ${reportLinks(`${matchCodes[0]} in ${p.name}`, issueBody(matchCodes[0], p, result.uses),
                         { course: matchCodes[0], program: p.name })}</p>
       </div>
