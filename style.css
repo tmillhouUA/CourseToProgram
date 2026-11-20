@@ -56,6 +56,11 @@ main {
 h1 { margin: 0 0 4px; font-size: 1.9rem; font-weight: 650; }
 .intro { margin: 0 0 24px; color: var(--muted); }
 
+/* If the title or subtitle wraps (phones, wider fonts), split it into lines of similar
+   length instead of leaving one or two words alone on the last line.
+   Browsers without support just wrap normally. */
+h1, .intro { text-wrap: balance; }
+
 a { color: var(--accent); }
 
 /* Hidden visually but still read by screen readers. */
